@@ -6,8 +6,8 @@ const initialState = {
     isPulling: false,
 };
 
-function reducer(state = initialState, action) {
-    console.log('reducer', action);
+export const reducer = (state = initialState, action) => {
+    
     switch(action.type){
         case PULL_POKE_INITIAL:
             return {
@@ -31,5 +31,3 @@ function reducer(state = initialState, action) {
             return state;
     }
 }
-
-export default reducer;

@@ -1,33 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {getMon} from '../actions/index';
 
-const PokeDex = props => {
-    const pullMon = (event) => {
-        event.preventDefault();
+const PokeDex = (props) => {
+    const {pokemon, error} = props;
+        useEffect(() => {
+            props.getMon();
+        }, []);
+
+    const handleClick = () => {
+        props.getMon();
     };
 
     return (
         <div>
-            <div>
-                <h1>Kanto PokeDex</h1>
-            </div>
-            <div>
+            <li>
                 {props.pokemon.map(pokemon => (
-                    <h3 key = {pokemon.url}>{pokemon.name}</h3>
+                    <h3 key = {pokemon.url}>You could choose {pokemon.name}, find out more information here: {pokemon.url}</h3>
                 ))}
-            </div>
+            </li>
             <div>
-                {props.error && <p className = 'error'>{props.error}</p>}
+                <button onClick = {handleClick}>Get Your New Pocket Monster!</button>
             </div>
-            <button onClick = {pullMon}>Get Your New Pocket Monster!</button>
         </div>
     );
 };
 
-const mapStateToProps = state => ({
-    pokemon: state.pokemon,
-    error: state.error
-});
+const mapStateToProps = state => {
+    return {
+        pokemon: state.pokemon,
+        error: state.error,
+    }
+};
 
 export default connect(mapStateToProps, {getMon})(PokeDex);
